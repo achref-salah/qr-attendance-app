@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "819676897109",
+    "project_id": "qr-attend-db27b",
+    "storage_bucket": "qr-attend-db27b.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:819676897109:android:db4c16a01c2c4ee83b59dc",
+        "android_client_info": {
+          "package_name": "tn.isaeg.qr_attendance_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDqECqnv7_K0R17y3X8N5FChbkW7Tb5Vjs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
