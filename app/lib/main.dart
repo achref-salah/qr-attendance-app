@@ -1,7 +1,8 @@
 import 'package:firebase_core/firebase_core.dart';
-
-import 'package:material_ui/material_ui.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:material_ui/material_ui.dart';
+import 'core/router/app_router.dart';
+import 'core/theme/app_theme.dart';
 import 'firebase_options.dart';
 
 Future<void> main() async {
@@ -10,14 +11,19 @@ Future<void> main() async {
   runApp(const ProviderScope(child: QrAttendApp()));
 }
 
-class QrAttendApp extends StatelessWidget {
+class QrAttendApp extends ConsumerWidget {
   const QrAttendApp({super.key});
 
   @override
-  Widget build(BuildContext context) => MaterialApp(
-    title: 'QR-Attend',
-    debugShowCheckedModeBanner: false,
-    theme: ThemeData(colorSchemeSeed: Colors.indigo, useMaterial3: true),
-    home: const Scaffold(body: Center(child: Text('Firebase connected'))),
-  );
+  Widget build(BuildContext context, WidgetRef ref) {
+    final router = ref.watch(appRouterProvider);
+    return MaterialApp.router(
+      title: 'QR-Attend',
+      debugShowCheckedModeBanner: false,
+      theme: AppTheme.light,
+      darkTheme: AppTheme.dark,
+      themeMode: ThemeMode.system,
+      routerConfig: router,
+    );
+  }
 }
