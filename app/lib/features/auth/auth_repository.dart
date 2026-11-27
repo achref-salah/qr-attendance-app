@@ -34,7 +34,12 @@ class AuthRepository {
         .collection(AppConstants.groupsCollection)
         .orderBy('name')
         .snapshots()
-        .map((snap) => snap.docs.map(GroupModel.fromFirestore).toList());
+        .map(
+          (snap) => snap.docs
+          .map(GroupModel.fromFirestore)
+          .where((group) => !group.isArchived)
+          .toList(),
+    );
   }
 
   Future<void> signIn({
