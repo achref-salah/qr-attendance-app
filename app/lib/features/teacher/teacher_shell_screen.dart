@@ -1,6 +1,8 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:material_ui/material_ui.dart';
+import '../academics/academics_provider.dart';
 import '../auth/auth_provider.dart';
+import 'groups_tab.dart';
 
 class TeacherShellScreen extends ConsumerStatefulWidget {
   const TeacherShellScreen({super.key});
@@ -23,6 +25,7 @@ class _TeacherShellScreenState extends ConsumerState<TeacherShellScreen> {
   Widget build(BuildContext context) {
     final user = ref.watch(currentUserProfileProvider).value;
     final colorScheme = Theme.of(context).colorScheme;
+    final segment = ref.watch(academicsSegmentProvider);
 
     return Scaffold(
       appBar: AppBar(
@@ -35,7 +38,9 @@ class _TeacherShellScreenState extends ConsumerState<TeacherShellScreen> {
           ),
         ],
       ),
-      body: Padding(
+      body: _selectedIndex == 1
+          ? const GroupsTab()
+          : Padding(
         padding: const EdgeInsets.all(20),
         child: Card(
           child: Padding(
@@ -58,11 +63,16 @@ class _TeacherShellScreenState extends ConsumerState<TeacherShellScreen> {
                         children: [
                           Text(
                             user?.name ?? 'Teacher',
-                            style: Theme.of(context).textTheme.titleMedium,
+                            style: Theme.of(
+                              context,
+                            ).textTheme.titleMedium,
                           ),
                           Text(
                             'Teacher Account',
-                            style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodySmall
+                                ?.copyWith(
                               color: colorScheme.onSurfaceVariant,
                             ),
                           ),
@@ -80,6 +90,15 @@ class _TeacherShellScreenState extends ConsumerState<TeacherShellScreen> {
           ),
         ),
       ),
+      floatingActionButton: _selectedIndex == 1
+          ? FloatingActionButton(
+        tooltip: segment == AcademicsSegment.groups
+            ? 'Create Group'
+            : 'Create Subject',
+        onPressed: () => showCreateAcademicsSheet(context, ref),
+        child: const Icon(Icons.add),
+      )
+          : null,
       bottomNavigationBar: NavigationBar(
         selectedIndex: _selectedIndex,
         onDestinationSelected: (index) => setState(() => _selectedIndex = index),

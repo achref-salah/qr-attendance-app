@@ -11,6 +11,7 @@ class AppConstants {
   static const String subjectsCollection = 'subjects';
   static const String groupsCollection = 'groups';
   static const String sessionsCollection = 'sessions';
+  static const String uniqueKeysCollection = 'unique_keys';
   static const String secretSubcollection = 'secret';
   static const String secretDocId = 'current';
   static const String presencesSubcollection = 'presences';
