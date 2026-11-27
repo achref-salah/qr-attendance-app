@@ -192,11 +192,20 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                         ),
                       ),
                     ),
+
                     const SizedBox(height: 12),
                     TextButton(
                       onPressed: _isLoading ? null : () => context.go('/register'),
-                      child: const Text('New student? Create an account'),
+                      child: const Text('Create Student Account'),
                     ),
+                    Text(
+                      'Teachers sign in with university-provisioned accounts.',
+                      textAlign: TextAlign.center,
+                      style: textTheme.bodySmall?.copyWith(
+                        color: colorScheme.onSurfaceVariant,
+                      ),
+                    ),
+
                   ],
                 ),
               ),
