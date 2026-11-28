@@ -150,7 +150,8 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                               controller: _passwordController,
                               obscureText: _obscurePassword,
                               textInputAction: TextInputAction.done,
-                              onFieldSubmitted: (_) => _isLoading ? null : _submit(),
+                              onFieldSubmitted: (_) =>
+                              _isLoading ? null : _submit(),
                               decoration: InputDecoration(
                                 labelText: 'Password',
                                 prefixIcon: const Icon(Icons.lock_outline),
@@ -163,8 +164,8 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                                   ),
                                   icon: Icon(
                                     _obscurePassword
-                                        ? Icons.visibility_outlined
-                                        : Icons.visibility_off_outlined,
+                                        ? Icons.visibility_off_outlined
+                                        : Icons.visibility_outlined,
                                   ),
                                 ),
                               ),
@@ -192,10 +193,10 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                         ),
                       ),
                     ),
-
                     const SizedBox(height: 12),
                     TextButton(
-                      onPressed: _isLoading ? null : () => context.go('/register'),
+                      onPressed:
+                      _isLoading ? null : () => context.go('/register'),
                       child: const Text('Create Student Account'),
                     ),
                     Text(
@@ -205,7 +206,6 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                         color: colorScheme.onSurfaceVariant,
                       ),
                     ),
-
                   ],
                 ),
               ),
