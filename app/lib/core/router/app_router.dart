@@ -5,6 +5,7 @@ import '../../features/auth/auth_provider.dart';
 import '../../features/auth/login_screen.dart';
 import '../../features/auth/register_screen.dart';
 import '../../features/student/student_shell_screen.dart';
+import '../../features/teacher/live_session_screen.dart';
 import '../../features/teacher/teacher_shell_screen.dart';
 
 class _RouterRefreshNotifier extends ChangeNotifier {
@@ -46,9 +47,9 @@ final appRouterProvider = Provider<GoRouter>((ref) {
 
       final profile = profileState.value!;
       if (profile.isTeacher) {
-        return location == '/teacher' ? null : '/teacher';
+        return location.startsWith('/teacher') ? null : '/teacher';
       }
-      return location == '/student' ? null : '/student';
+      return location.startsWith('/student') ? null : '/student';
     },
     routes: [
       GoRoute(
@@ -72,6 +73,12 @@ final appRouterProvider = Provider<GoRouter>((ref) {
       GoRoute(
         path: '/teacher',
         builder: (_, _) => const TeacherShellScreen(),
+      ),
+      GoRoute(
+        path: '/teacher/session/:id',
+        builder: (_, state) => LiveSessionScreen(
+          sessionId: state.pathParameters['id']!,
+        ),
       ),
       GoRoute(
         path: '/student',

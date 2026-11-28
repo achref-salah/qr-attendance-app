@@ -3,6 +3,7 @@ import 'package:material_ui/material_ui.dart';
 import '../academics/academics_provider.dart';
 import '../auth/auth_provider.dart';
 import 'groups_tab.dart';
+import 'sessions_tab.dart';
 
 class TeacherShellScreen extends ConsumerStatefulWidget {
   const TeacherShellScreen({super.key});
@@ -27,20 +28,13 @@ class _TeacherShellScreenState extends ConsumerState<TeacherShellScreen> {
     final colorScheme = Theme.of(context).colorScheme;
     final segment = ref.watch(academicsSegmentProvider);
 
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(_titles[_selectedIndex]),
-        actions: [
-          IconButton(
-            tooltip: 'Log out',
-            onPressed: () => ref.read(authRepositoryProvider).signOut(),
-            icon: const Icon(Icons.logout),
-          ),
-        ],
-      ),
-      body: _selectedIndex == 1
-          ? const GroupsTab()
-          : Padding(
+    Widget body;
+    if (_selectedIndex == 0) {
+      body = const SessionsTab();
+    } else if (_selectedIndex == 1) {
+      body = const GroupsTab();
+    } else {
+      body = Padding(
         padding: const EdgeInsets.all(20),
         child: Card(
           child: Padding(
@@ -63,9 +57,7 @@ class _TeacherShellScreenState extends ConsumerState<TeacherShellScreen> {
                         children: [
                           Text(
                             user?.name ?? 'Teacher',
-                            style: Theme.of(
-                              context,
-                            ).textTheme.titleMedium,
+                            style: Theme.of(context).textTheme.titleMedium,
                           ),
                           Text(
                             'Teacher Account',
@@ -89,16 +81,39 @@ class _TeacherShellScreenState extends ConsumerState<TeacherShellScreen> {
             ),
           ),
         ),
-      ),
-      floatingActionButton: _selectedIndex == 1
-          ? FloatingActionButton(
+      );
+    }
+
+    FloatingActionButton? fab;
+    if (_selectedIndex == 0) {
+      fab = FloatingActionButton(
+        tooltip: 'Start Session',
+        onPressed: () => showStartSessionFlow(context, ref),
+        child: const Icon(Icons.add),
+      );
+    } else if (_selectedIndex == 1) {
+      fab = FloatingActionButton(
         tooltip: segment == AcademicsSegment.groups
             ? 'Create Group'
             : 'Create Subject',
         onPressed: () => showCreateAcademicsSheet(context, ref),
         child: const Icon(Icons.add),
-      )
-          : null,
+      );
+    }
+
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(_titles[_selectedIndex]),
+        actions: [
+          IconButton(
+            tooltip: 'Log out',
+            onPressed: () => ref.read(authRepositoryProvider).signOut(),
+            icon: const Icon(Icons.logout),
+          ),
+        ],
+      ),
+      body: body,
+      floatingActionButton: fab,
       bottomNavigationBar: NavigationBar(
         selectedIndex: _selectedIndex,
         onDestinationSelected: (index) => setState(() => _selectedIndex = index),
